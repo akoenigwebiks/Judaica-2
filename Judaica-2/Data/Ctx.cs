@@ -4,10 +4,19 @@ namespace Judaica_2.Data
 {
     public class Ctx : DbContext
     {
-        //private static DbContextOptions GetOptions(string connectionString)
-        //{
-        //    return SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), connectionString).Options;
-        //}
+        public Ctx()
+        {
+            Seed();
+        }
+
+        private void Seed()
+        {
+            if (Categories.Count() > 0) return;
+            Category category = new Category { Name = "חנות יודאיקה הכי שווה בעולם" };
+            Categories.Add(category);
+            SaveChanges();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=AEK\\SQLEXPRESS;initial catalog=judaica;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
