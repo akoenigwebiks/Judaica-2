@@ -1,7 +1,10 @@
+using Judaica_2.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<Ctx>();
 
 var app = builder.Build();
 
