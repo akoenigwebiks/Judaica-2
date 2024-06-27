@@ -1,6 +1,8 @@
-﻿using Judaica_2.Data;
+﻿using Judaica_2.Auth.Filters;
+using Judaica_2.Data;
 using Judaica_2.Models;
 using Judaica_2.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Dynamic;
@@ -18,6 +20,7 @@ namespace Judaica_2.Controllers
             _context = context; // Assign the injected context to the private field
         }
 
+        [CustomAuthorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
