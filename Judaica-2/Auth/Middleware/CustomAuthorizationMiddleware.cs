@@ -19,7 +19,7 @@
             {
                 _logger.LogInformation("Redirecting unauthorized request to /Home/Index");
                 context.Response.Clear();
-                context.Response.Redirect("https://stackoverflow.com/questions/40646312/asp-net-core-authorize-attribute-not-working-with-jwt");
+                context.Response.Redirect("/auth/login");
             }
         }
     }

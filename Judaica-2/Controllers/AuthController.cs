@@ -1,40 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Judaica_2.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 
-namespace YourNamespace.Controllers
+namespace Judaica_2.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
-        private readonly JwtTokenGenerator _jwtTokenGenerator;
 
-        public AuthController()
+        // This action is to serve the Login View
+        [HttpGet]
+        public IActionResult Login()
         {
-            _jwtTokenGenerator = new JwtTokenGenerator("YourSecretKeyHere", "YourIssuer", "YourAudience");
+            return View("Login", new LoginViewModel());
         }
-
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel login)
-        {
-            if (IsValidUser(login))
-            {
-                var token = _jwtTokenGenerator.GenerateToken(login.Username);
-                return Ok(new { token });
-            }
-
-            return Unauthorized();
-        }
-
-        private bool IsValidUser(LoginModel login)
-        {
-            // Replace with your user validation logic
-            return login.Username == "test" && login.Password == "password";
-        }
-    }
-
-    public class LoginModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }
