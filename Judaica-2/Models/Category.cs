@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Judaica_2.Services;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Judaica_2.Models
 {
     public class Category
     {
-        public Category() { }
-        public Category(string name)
-        {
+        public Category() {
             Items = new List<Item>();
-            Name = name;
+            Name = "";
         }
 
         [Key]
@@ -38,7 +37,8 @@ namespace Judaica_2.Models
             //בדיקה האם נשלח שם לקטגוריה
             if (categoryName == string.Empty) return null;
             //הצהרה על קטגוריה חדשה
-            Category category = new Category(categoryName);
+            Category category = new Category();
+            category.Name = categoryName;
             //אם לא נתקבלה תמונה
             if (image != null)
             {
@@ -58,7 +58,7 @@ namespace Judaica_2.Models
         //פונקציות להוספת פריטים עם מחיר ראשוני עם תמונה
         public Item AddItem(string itemName, IFormFile image = null, decimal price = 0)
         {
-            Item item = new Item(this,itemName);
+            Item item = new Item(this, itemName);
             item.AddImage(image);
             item.AddPrice(price);
             Items.Add(item);
@@ -79,7 +79,7 @@ namespace Judaica_2.Models
         }
         private void AllItems(List<Item> items, Category category)
         {
-            if (category.Items.Count > 0)
+            if (category.Items?.Count > 0)
                 items.Concat(category.Items);
             //foreach(Item item in category.Items)
             //    items.Add(item);
